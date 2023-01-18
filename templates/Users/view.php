@@ -12,7 +12,6 @@ use Cake\Controller\Controller;
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id], ['class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
@@ -28,10 +27,6 @@ use Cake\Controller\Controller;
                 <tr>
                     <th><?= __('Email') ?></th>
                     <td><?= h($user->email) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($user->id) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Created At') ?></th>

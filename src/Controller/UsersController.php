@@ -103,12 +103,10 @@ class UsersController extends AppController
     public function postadd($userid)
     {
         $post = $this->Post->newEmptyEntity();
+        $post['userid'] = $userid;
         if ($this->request->is('post')) {
             $data = $this->request->getData();
             $data['users_id'] = $userid;
-            // echo '<pre>';
-            // print_r($data);
-            // die;
             $post = $this->Post->patchEntity($post, $data);
             if ($this->Post->save($post)) {
                 $this->Flash->success(__('The post has been saved.'));
@@ -171,6 +169,8 @@ class UsersController extends AppController
         $comment = $this->Comment->get($id, [
             'contain' => [],
         ]);
+        $comment['postid'] = $postid;
+        $comment['userid'] = $userid;
         if ($this->request->is(['patch', 'post', 'put'])) {
             $comment = $this->Comment->patchEntity($comment, $this->request->getData());
             if ($this->Comment->save($comment)) {
