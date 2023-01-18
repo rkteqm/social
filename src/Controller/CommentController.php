@@ -66,7 +66,7 @@ class CommentController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null, $postid)
+    public function edit($id = null, $postid, $userid)
     {
         $comment = $this->Comment->get($id, [
             'contain' => [],
@@ -76,7 +76,7 @@ class CommentController extends AppController
             if ($this->Comment->save($comment)) {
                 $this->Flash->success(__('The comment has been saved.'));
 
-                return $this->redirect(['controller' => 'post', 'action' => 'view', $postid]);
+                return $this->redirect(['controller' => 'post', 'action' => 'view', $postid, $userid]);
             }
             $this->Flash->error(__('The comment could not be saved. Please, try again.'));
         }
@@ -90,7 +90,7 @@ class CommentController extends AppController
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null, $postid)
+    public function delete($id = null, $postid, $userid)
     {
         $this->request->allowMethod(['post', 'delete']);
         $comment = $this->Comment->get($id);
@@ -100,6 +100,6 @@ class CommentController extends AppController
             $this->Flash->error(__('The comment could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['controller' => 'post', 'action' => 'view', $postid]);
+        return $this->redirect(['controller' => 'post', 'action' => 'view', $postid, $userid]);
     }
 }

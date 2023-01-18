@@ -39,9 +39,11 @@ use Cake\Controller\Controller;
                     <td><?= h($user->created_at) ?></td>
                 </tr>
             </table>
+            <h3><?= h("Your Post's..") ?></h3>
             <table>
                 <thead>
                     <tr>
+                        <th><?= $this->Paginator->sort('id') ?></th>
                         <th><?= $this->Paginator->sort('title') ?></th>
                         <th><?= $this->Paginator->sort('body') ?></th>
                         <th><?= $this->Paginator->sort('created_at') ?></th>
@@ -51,6 +53,7 @@ use Cake\Controller\Controller;
                 <tbody>
                     <?php foreach ($user->post as $post) : ?>
                         <tr>
+                            <td><?= h($post->id) ?></td>
                             <td><?= h($post->title) ?></td>
                             <td><?= h($post->body) ?></td>
                             <td><?= h($post->created_at) ?></td>

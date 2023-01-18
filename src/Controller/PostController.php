@@ -40,7 +40,7 @@ class PostController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null, $userid)
+    public function view($id = null, $userid = null)
     {
         $post = $this->Post->get($id, [
             'contain' => ['Users', 'Comment'],
@@ -55,7 +55,7 @@ class PostController extends AppController
             // echo '<pre>'; print_r($comment);die;
             if ($this->Comment->save($comment)) {
                 $this->Flash->success(__('The comment has been saved.'));
-                return $this->redirect(['action' => 'view', $id]);
+                return $this->redirect(['controller' => 'post', 'action' => 'view', $id, $userid]);
             }
             $this->Flash->error(__('The comment could not be saved. Please, try again.'));
         }
