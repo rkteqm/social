@@ -13,7 +13,7 @@
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('users_id') ?></th>
+                    <th><?= $this->Paginator->sort('Author Name') ?></th>
                     <th><?= $this->Paginator->sort('title') ?></th>
                     <th><?= $this->Paginator->sort('body') ?></th>
                     <th><?= $this->Paginator->sort('created_at') ?></th>
@@ -24,12 +24,12 @@
                 <?php foreach ($post as $post): ?>
                 <tr>
                     <td><?= $this->Number->format($post->id) ?></td>
-                    <td><?= $post->has('user') ? $this->Html->link($post->user->name, ['controller' => 'Users', 'action' => 'view', $post->user->id]) : '' ?></td>
+                    <td><?= h($post->user->name) ?></td>
                     <td><?= h($post->title) ?></td>
                     <td><?= h($post->body) ?></td>
                     <td><?= h($post->created_at) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $post->id]) ?>
+                        <?= $this->Html->link(__('View'), ['action' => 'postview', $post->id]) ?>
                         </td>
                 </tr>
                 <?php endforeach; ?>

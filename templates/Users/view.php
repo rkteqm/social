@@ -13,13 +13,12 @@ use Cake\Controller\Controller;
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
             <?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column-responsive column-80">
         <div class="users view content">
-            <?= $this->Html->link(__('New Post'), ['controller' => 'post', 'action' => 'add', $user->id], ['class' => 'button float-right']) ?>
+            <?= $this->Html->link(__('New Post'), ['action' => 'postadd', $user->id], ['class' => 'button float-right']) ?>
             <h3><?= h($user->name) ?></h3>
             <table>
                 <tr>
@@ -58,9 +57,9 @@ use Cake\Controller\Controller;
                             <td><?= h($post->body) ?></td>
                             <td><?= h($post->created_at) ?></td>
                             <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'post' , 'action' => 'view', $post->id, $user->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'post' , 'action' => 'edit', $post->id, $user->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'post' , 'action' => 'delete', $post->id, $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $post->id)]) ?>
+                                <?= $this->Html->link(__('View'), ['action' => 'postview', $post->id, $user->id]) ?>
+                                <?= $this->Html->link(__('Edit'), ['action' => 'postedit', $post->id, $user->id]) ?>
+                                <?= $this->Form->postLink(__('Delete'), ['action' => 'postdelete', $post->id, $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $post->id)]) ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

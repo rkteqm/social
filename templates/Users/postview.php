@@ -13,7 +13,7 @@
             if ($post->userid != null) {
                 echo $this->Html->link(__('List Post'), ['controller' => 'users', 'action' => 'view', $post->userid], ['class' => 'side-nav-item']);
             } else {
-                echo  $this->Html->link(__('List Post'), ['action' => 'index'], ['class' => 'side-nav-item']);
+                echo  $this->Html->link(__('List Post'), ['controller' => 'users', 'action' => 'home'], ['class' => 'side-nav-item']);
             } ?>
         </div>
     </aside>
@@ -22,8 +22,8 @@
             <h3><?= h($post->title) ?></h3>
             <table>
                 <tr>
-                    <th><?= __('User') ?></th>
-                    <td><?= $post->has('user') ? $this->Html->link($post->user->name, ['controller' => 'Users', 'action' => 'view', $post->user->id]) : '' ?></td>
+                    <th><?= __('Author Name') ?></th>
+                    <td><?= h($post->user->name) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Title') ?></th>
@@ -32,10 +32,6 @@
                 <tr>
                     <th><?= __('Body') ?></th>
                     <td><?= h($post->body) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($post->id) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Created At') ?></th>
@@ -60,8 +56,8 @@
                                     <td><?= h($comment->commented_at) ?></td>
                                     <?php if ($post->userid != null) { ?>
                                         <td class="actions">
-                                            <?= $this->Html->link(__('Edit'), ['controller' => 'comment', 'action' => 'edit', $comment->id, $post->id, $post->userid]) ?>
-                                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'comment', 'action' => 'delete', $comment->id, $post->id, $post->userid], ['confirm' => __('Are you sure you want to delete # {0}?', $comment->id)]) ?>
+                                            <?= $this->Html->link(__('Edit'), ['action' => 'commentedit', $comment->id, $post->id, $post->userid]) ?>
+                                            <?= $this->Form->postLink(__('Delete'), ['action' => 'commentdelete', $comment->id, $post->id, $post->userid], ['confirm' => __('Are you sure you want to delete # {0}?', $comment->id)]) ?>
                                         </td>
                                     <?php } ?>
 
@@ -80,8 +76,6 @@
                             echo $this->Form->input('comment');
                             ?>
                             <button type="submit" class="fa-solid fa-arrow-right"></button>
-                            <!-- <input type="submit" class="fa-solid fa-arrow-right">
-                            <span><i class="fa-solid fa-arrow-right"></i></span> -->
                         </fieldset>
                         <?= $this->Form->end() ?>
                     </div>
