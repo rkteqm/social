@@ -22,8 +22,8 @@
             <h3><?= h($post->title) ?></h3>
             <table>
                 <tr>
-                    <th><?= __('Author Name') ?></th>
-                    <td><?= h($post->user->name) ?></td>
+                    <th><?= __('Post Image') ?></th>
+                    <td><?= $this->Html->image(h($post->post_image), array('width' => '250px')) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Title') ?></th>

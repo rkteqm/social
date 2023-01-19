@@ -16,6 +16,7 @@
                     <th><?= $this->Paginator->sort('Author Name') ?></th>
                     <th><?= $this->Paginator->sort('title') ?></th>
                     <th><?= $this->Paginator->sort('body') ?></th>
+                    <th><?= $this->Paginator->sort('post_image') ?></th>
                     <th><?= $this->Paginator->sort('created_at') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
@@ -27,6 +28,7 @@
                     <td><?= h($post->user->name) ?></td>
                     <td><?= h($post->title) ?></td>
                     <td><?= h($post->body) ?></td>
+                    <td><?= $this->Html->image(h($post->post_image), array('width' => '70px')) ?></td>
                     <td><?= h($post->created_at) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'postview', $post->id]) ?>

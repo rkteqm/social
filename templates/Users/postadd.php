@@ -17,12 +17,13 @@
     </aside>
     <div class="column-responsive column-80">
         <div class="post form content">
-            <?= $this->Form->create($post) ?>
+            <?= $this->Form->create($post,['enctype' => 'multipart/form-data']) ?>
             <fieldset>
                 <legend><?= __('Add Post') ?></legend>
                 <?php
-                echo $this->Form->control('title');
-                echo $this->Form->control('body');
+                echo $this->Form->control('post_image', ['type' => 'file', 'required' => 'false']);
+                echo $this->Form->control('title', ['required' => 'false']);
+                echo $this->Form->control('body', ['required' => 'false']);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

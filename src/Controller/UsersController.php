@@ -61,7 +61,7 @@ class UsersController extends AppController
     public function postview($id = null, $userid = null)
     {
         $post = $this->Post->get($id, [
-            'contain' => ['Users','Comment'],
+            'contain' => ['Users', 'Comment'],
         ]);
         $post['userid'] = $userid;
 
@@ -89,8 +89,26 @@ class UsersController extends AppController
     {
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $data = $this->request->getData();
+            $productImage = $this->request->getData("image");
+            $fileName = $productImage->getClientFilename();
+            $fileSize = $productImage->getSize();
+            $data["image"] = $fileName;
+            $user = $this->Users->patchEntity($user, $data);
             if ($this->Users->save($user)) {
+                $hasFileError = $productImage->getError();
+
+                if ($hasFileError > 0) {
+                    $data["image"] = "";
+                } else {
+                    $fileType = $productImage->getClientMediaType();
+
+                    if ($fileType == "image/png" || $fileType == "image/jpeg" || $fileType == "image/jpg") {
+                        $imagePath = WWW_ROOT . "img/" . $fileName;
+                        $productImage->moveTo($imagePath);
+                        $data["image"] = $fileName;
+                    }
+                }
                 $this->Flash->success(__('The user has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -105,10 +123,30 @@ class UsersController extends AppController
         $post = $this->Post->newEmptyEntity();
         $post['userid'] = $userid;
         if ($this->request->is('post')) {
+
             $data = $this->request->getData();
+            $productImage = $this->request->getData("post_image");
+            $fileName = $productImage->getClientFilename();
+            $fileSize = $productImage->getSize();
+            $data["post_image"] = $fileName;
             $data['users_id'] = $userid;
             $post = $this->Post->patchEntity($post, $data);
             if ($this->Post->save($post)) {
+
+                $hasFileError = $productImage->getError();
+
+                if ($hasFileError > 0) {
+                    $data["post_image"] = "";
+                } else {
+                    $fileType = $productImage->getClientMediaType();
+
+                    if ($fileType == "image/png" || $fileType == "image/jpeg" || $fileType == "image/jpg") {
+                        $imagePath = WWW_ROOT . "img/" . $fileName;
+                        $productImage->moveTo($imagePath);
+                        $data["post_image"] = $fileName;
+                    }
+                }
+
                 $this->Flash->success(__('The post has been saved.'));
 
                 return $this->redirect(['action' => 'view', $userid]);
@@ -131,9 +169,33 @@ class UsersController extends AppController
         $user = $this->Users->get($id, [
             'contain' => [],
         ]);
+        $fileName2 = $user['image'];
+
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $data = $this->request->getData();
+            $productImage = $this->request->getData("image");
+            $fileName = $productImage->getClientFilename();
+            if ($fileName == '') {
+                $fileName = $fileName2;
+            }
+
+            $data["image"] = $fileName;
+            $user = $this->Users->patchEntity($user, $data);
             if ($this->Users->save($user)) {
+
+                $hasFileError = $productImage->getError();
+                if ($hasFileError > 0) {
+                    $data["image"] = "";
+                } else {
+                    $fileType = $productImage->getClientMediaType();
+
+                    if ($fileType == "image/png" || $fileType == "image/jpeg" || $fileType == "image/jpg") {
+                        $imagePath = WWW_ROOT . "img/" . $fileName;
+                        $productImage->moveTo($imagePath);
+                        $data["image"] = $fileName;
+                    }
+                }
+
                 $this->Flash->success(__('The user has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -149,19 +211,43 @@ class UsersController extends AppController
             'contain' => [],
         ]);
         $post['userid'] = $userid;
+        $fileName2 = $post['post_image'];
 
         // echo '<pre>';print_r($post);die;
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $post = $this->Post->patchEntity($post, $this->request->getData());
+            $data = $this->request->getData();
+            $productImage = $this->request->getData("post_image");
+            $fileName = $productImage->getClientFilename();
+            if ($fileName == '') {
+                $fileName = $fileName2;
+            }
+
+            $data["post_image"] = $fileName;
+            $user = $this->Users->patchEntity($post, $data);
             if ($this->Post->save($post)) {
+
+                $hasFileError = $productImage->getError();
+                if ($hasFileError > 0) {
+                    $data["post_image"] = "";
+                } else {
+                    $fileType = $productImage->getClientMediaType();
+
+                    if ($fileType == "image/png" || $fileType == "image/jpeg" || $fileType == "image/jpg") {
+                        $imagePath = WWW_ROOT . "img/" . $fileName;
+                        $productImage->moveTo($imagePath);
+                        $data["post_image"] = $fileName;
+                    }
+                }
+
                 $this->Flash->success(__('The post has been saved.'));
 
                 return $this->redirect(['controller' => 'users', 'action' => 'view', $userid]);
             }
             $this->Flash->error(__('The post could not be saved. Please, try again.'));
         }
-        $users = $this->Post->Users->find('list', ['limit' => 200])->all();
-        $this->set(compact('post', 'users'));
+        // $users = $this->Post->Users->find('list', ['limit' => 200])->all();
+        // echo '<pre>';print_r($post);die;
+        $this->set(compact('post'));
     }
 
     public function commentedit($id = null, $postid, $userid)
@@ -227,5 +313,11 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['action' => 'postview', $postid, $userid]);
+    }
+
+    public function login()
+    {
+        echo 'login';
+        die;
     }
 }

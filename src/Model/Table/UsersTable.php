@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -44,7 +45,6 @@ class UsersTable extends Table
         $this->hasMany('Post', [
             'foreignKey' => 'users_id',
         ]);
-
     }
 
     /**
@@ -59,19 +59,98 @@ class UsersTable extends Table
             ->scalar('name')
             ->maxLength('name', 100)
             ->requirePresence('name', 'create')
-            ->notEmptyString('name');
+            ->add('name', [
+                'notBlank' => [
+                    'rule'    => ['notBlank'],
+                    'message' => 'Please enter your name',
+                    'last' => true
+                ],
+                'characters' => [
+                    'rule'    => ['custom', '/^[A-Z_ ]+$/i'],
+                    'allowEmpty' => false,
+                    'last' => true,
+                    'message' => 'Please Enter characters only.'
+                ],
+                'length' => [
+                    'rule' => ['minLength', 2],
+                    'last' => true,
+                    'message' => 'First Name need to be at least 2 characters long',
+                ],
+            ]);
 
         $validator
             ->email('email')
             ->requirePresence('email', 'create')
-            ->notEmptyString('email')
-            ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->notEmptyString('email', 'Please enter your email')
+            ->add('email', 'unique', [
+                'rule' => 'validateUnique', 'provider' => 'table',
+                'message' => 'Email already exist please enter another email',
+            ]);
 
         $validator
             ->scalar('password')
             ->maxLength('password', 100)
             ->requirePresence('password', 'create')
-            ->notEmptyString('password');
+            ->add('password', [
+                'notBlank' => [
+                    'rule'    => ['notBlank'],
+                    'message' => 'Please enter your password',
+                    'last' => true,
+                ],
+                'upperCase' => [
+                    'rule' => function ($value) {
+                        $count = mb_strlen(preg_replace('![^A-Z]+!', '', $value));
+                        if ($count > 0) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    },
+                    'message' => 'Please enter at least one uppercase',
+                ],
+                'lowerCase' => [
+                    'rule' => function ($value) {
+                        $count = mb_strlen(preg_replace('![^a-z]+!', '', $value));
+                        if ($count > 0) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    },
+                    'message' => 'Please enter at least one lowercase',
+                ],
+                'numeric' => [
+                    'rule' => function ($value) {
+                        $count = mb_strlen(preg_replace('![^0-9]+!', '', $value));
+                        if ($count > 0) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    },
+                    'message' => 'Please enter at least one numeric',
+                ],
+                'special' => [
+                    'rule' => function ($value) {
+                        $count = mb_strlen(preg_replace('![^@#*]+!', '', $value));
+                        if ($count > 0) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    },
+                    'message' => 'Please enter at least one special character',
+                ],
+                'minLength' => [
+                    'rule' => ['minLength', 8],
+                    'message' => 'Password need to be 8 characters long',
+                ],
+            ]);
+
+        $validator
+            ->scalar('image')
+            ->requirePresence('image', 'create')
+            ->notEmptyString('image', 'Please select your image');
 
         $validator
             ->dateTime('created_at')

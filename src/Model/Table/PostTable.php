@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -69,13 +70,19 @@ class PostTable extends Table
             ->scalar('title')
             ->maxLength('title', 100)
             ->requirePresence('title', 'create')
-            ->notEmptyString('title');
+            ->notEmptyString('title', 'Please enter your post title');
 
         $validator
             ->scalar('body')
             ->maxLength('body', 250)
             ->requirePresence('body', 'create')
-            ->notEmptyString('body');
+            ->notEmptyString('body', 'Please describe your post');
+
+
+        $validator
+            ->scalar('post_image')
+            ->requirePresence('post_image', 'create')
+            ->notEmptyString('post_image', 'Please select your post image');
 
         $validator
             ->dateTime('created_at')
