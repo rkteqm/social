@@ -28,7 +28,6 @@
                 <?php
                 echo $this->Form->control('name', ['required' => 'false']);
                 echo $this->Form->control('email', ['required' => 'false']);
-                echo $this->Form->control('password', ['required' => 'false']);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

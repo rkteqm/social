@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -18,6 +19,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,23 +39,37 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
 </head>
 <style>
-    .hidethis{
+    .hidethis {
         display: none;
     }
 
-    .error-message{
+    .error-message {
         color: red;
     }
 </style>
+
 <body>
     <nav class="top-nav">
         <div class="top-nav-title">
             <a href="<?= $this->Url->build('/') ?>"><span>Home</span>Page</a>
         </div>
-        <div class="top-nav-links">
-            <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/">Documentation</a>
-            <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
-        </div>
+        <?php
+        // $session = $this->request->getSession();
+        // if ($session->read('login')) {
+        //     echo '
+        //         <div class="top-nav-title">
+        //         <a href="' . $this->Url->build('/Users/logout') . '">Logout</a>
+        //         </div>
+        //         ';
+        //     } else {
+        //         echo '
+        //         <div class="top-nav-links">
+        //         <a href="' . $this->Url->build('/Users/add') . '">Register</a>
+        //         <a href="' . $this->Url->build('/Users/login') . '">Login</a>
+        //         </div>
+        //     ';
+        // }
+        ?>
     </nav>
     <main class="main">
         <div class="container">
@@ -64,4 +80,5 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <footer>
     </footer>
 </body>
+
 </html>

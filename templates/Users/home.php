@@ -5,8 +5,8 @@
  */
 ?>
 <div class="post index content">
-    <?= $this->Html->link(__('Register'), ['controller' => 'Users' ,'action' => 'add'], ['class' => 'button float-right']) ?>
-    <?= $this->Html->link(__('Login'), ['controller' => 'Users' ,'action' => 'login'], ['class' => 'button float-right']) ?>
+    <?= $this->Html->link(__('Register'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button float-right']) ?>
+    <?= $this->Html->link(__('Login'), ['controller' => 'Users', 'action' => 'login'], ['class' => 'button float-right']) ?>
     <h3><?= __('Post') ?></h3>
     <div class="table-responsive">
         <table>
@@ -22,18 +22,18 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($post as $post): ?>
-                <tr>
-                    <td><?= $this->Number->format($post->id) ?></td>
-                    <td><?= h($post->user->name) ?></td>
-                    <td><?= h($post->title) ?></td>
-                    <td><?= h($post->body) ?></td>
-                    <td><?= $this->Html->image(h($post->post_image), array('width' => '70px')) ?></td>
-                    <td><?= h($post->created_at) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'postview', $post->id]) ?>
+                <?php foreach ($post as $post) : ?>
+                    <tr>
+                        <td><?= $this->Number->format($post->id) ?></td>
+                        <td><?= h($post->user->name) ?></td>
+                        <td><?= h($post->title) ?></td>
+                        <td><?= h($post->body) ?></td>
+                        <td><?= $this->Html->image(h($post->post_image), array('width' => '70px')) ?></td>
+                        <td><?= h($post->created_at) ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('View'), ['action' => 'postview', $post->id]) ?>
                         </td>
-                </tr>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>

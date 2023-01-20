@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\ORM\TableRegistry;
+use Cake\Mailer\Email;
+use Cake\Mailer\Mailer;
+use Cake\Mailer\TransportFactory;
+use Cake\View\View;
+
 /**
  * Users Controller
  *
@@ -23,13 +29,26 @@ class UsersController extends AppController
         $this->Model = $this->loadModel('Post');
         $this->Model = $this->loadModel('Comment');
         $this->loadComponent('Flash');
+        $this->loadComponent('Authentication.Authentication');
     }
 
     public function index()
     {
         $users = $this->paginate($this->Users);
+        // $user = $this->Authentication->getIdentity();
+        // echo '<pre>';
+        // print_r($user);
+        // die;
 
         $this->set(compact('users'));
+    }
+
+    public function userindex()
+    {
+        $this->viewBuilder()->setLayout('mydefault');
+
+        $posts = $this->paginate($this->Post);
+        $this->set(compact('posts'));
     }
 
     public function home()
@@ -245,8 +264,6 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The post could not be saved. Please, try again.'));
         }
-        // $users = $this->Post->Users->find('list', ['limit' => 200])->all();
-        // echo '<pre>';print_r($post);die;
         $this->set(compact('post'));
     }
 
@@ -315,9 +332,102 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'postview', $postid, $userid]);
     }
 
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->Authentication->addUnauthenticatedActions(['login', 'add']);
+    }
+
     public function login()
     {
-        echo 'login';
-        die;
+        $this->request->allowMethod(['get', 'post']);
+        $result = $this->Authentication->getResult();
+        // regardless of POST or GET, redirect if user is logged in
+        if ($result && $result->isValid()) {
+            // redirect to /articles after login success
+            $redirect = $this->request->getQuery('redirect', [
+                'controller' => 'Users',
+                'action' => 'index',
+            ]);
+            // $session = $this->request->getSession(); //read session data
+            // $session->write('login', true);
+
+            return $this->redirect($redirect);
+        }
+        // display error if user submitted and authentication failed
+        if ($this->request->is('post') && !$result->isValid()) {
+            $this->Flash->error(__('Invalid username or password'));
+        }
     }
+
+    public function logout()
+    {
+        $result = $this->Authentication->getResult();
+        // regardless of POST or GET, redirect if user is logged in
+        if ($result && $result->isValid()) {
+            $this->Authentication->logout();
+            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
+    }
+
+    public function forgot()
+    {
+        $user = $this->Users->newEmptyEntity();
+        if ($this->request->is('post')) {
+            $email = $this->request->getData('email');
+            $users = TableRegistry::get("Users");
+            $user = $users->find('all')->where(['email' => $email])->first();
+            if ($user) {
+                $token = rand(10000, 100000);
+                $user->token = $token;
+                if ($users->save($user)) {
+                    $mailer = new Mailer('default');
+                    $mailer->setTransport('gmail');
+                    $mailer->setFrom(['abc@gmail.com' => 'Rahul']);
+                    $mailer->setTo($email);
+                    $mailer->setEmailFormat('html');
+                    $mailer->setSubject('Reset password link');
+                    $mailer->deliver('<a href="http://localhost:8765/users/reset?token=' . $token . '">Click here</a> for reset your password');
+
+                    $this->Flash->success(__('Reset email send successfully.'));
+                }
+            } else {
+                $this->Flash->error(__('Please enter valid credential..'));
+            }
+        }
+        $this->set(compact('user'));
+    }
+
+    public function reset()
+    {
+        $user = $this->Users->newEmptyEntity();
+        $token = $_REQUEST['token'];
+        $users = TableRegistry::get("Users");
+        $result = $users->find('all')->where(['token' => $token])->first();
+        if ($result) {
+            if ($this->request->is('post')) {
+                $user = $this->Users->patchEntity($user, $this->request->getData());
+                $password = $this->request->getData('password');
+                $res1 = preg_match('(^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]*).{8,}$)', $password);
+                $confirm_password = $this->request->getData('confirm_password');
+                if ($res1 == 1 && $confirm_password == $password) {
+                    $result->password = $password;
+                    $result->token = NULL;
+                    if ($users->save($result)) {
+                        $this->Flash->success(__('Password updated successfully.'));
+                        return $this->redirect(['action' => 'login']);
+                    }
+                }
+                $this->Flash->error(__('Please enter valid password'));
+            }
+        } else {
+            return $this->redirect(['action' => 'login']);
+        }
+
+        $this->set(compact('user'));
+    }
+
+    public $paginate = [
+        'limit' => 9
+    ];
 }
