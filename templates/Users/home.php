@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var iterable<\App\Model\Entity\Post> $post
+ * @var iterable<\App\Model\Entity\Post> $posts
  */
 ?>
 <div class="post index content">
@@ -22,7 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($post as $post) : ?>
+                <?php foreach ($posts as $post) : ?>
                     <tr>
                         <td><?= $this->Number->format($post->id) ?></td>
                         <td><?= h($post->user->name) ?></td>

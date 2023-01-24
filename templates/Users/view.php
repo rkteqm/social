@@ -12,11 +12,18 @@ use Cake\Controller\Controller;
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <?php
+            if ($user->role == 0) {
+                echo $this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'side-nav-item']);
+            } elseif ($user->role == 1) {
+                echo $this->Html->link(__('Edit Profile'), ['action' => 'edit', $user->id]);
+            }
+            ?>
         </div>
     </aside>
     <div class="column-responsive column-80">
         <div class="users view content">
+            <?= $this->Html->link(__('Logout'), ['action' => 'logout'], ['class' => 'button float-right']) ?>
             <?= $this->Html->link(__('New Post'), ['action' => 'postadd', $user->id], ['class' => 'button float-right']) ?>
             <h3><?= h($user->name) ?></h3>
             <table>

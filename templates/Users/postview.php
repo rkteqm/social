@@ -46,7 +46,7 @@
                             <tr>
                                 <th><?= __('Comment') ?></th>
                                 <th><?= __('Commented At') ?></th>
-                                <?php if ($post->userid != null) { ?>
+                                <?php if ($post->role == 0 && $post->userid != null) { ?>
                                     <th><?= __('Action') ?></th>
                                 <?php } ?>
                             </tr>
@@ -54,7 +54,7 @@
                                 <tr>
                                     <td><?= h($comment->comment) ?></td>
                                     <td><?= h($comment->commented_at) ?></td>
-                                    <?php if ($post->userid != null) { ?>
+                                    <?php if ($post->role == 0 && $post->userid != null) { ?>
                                         <td class="actions">
                                             <?= $this->Html->link(__('Edit'), ['action' => 'commentedit', $comment->id, $post->id, $post->userid]) ?>
                                             <?= $this->Form->postLink(__('Delete'), ['action' => 'commentdelete', $comment->id, $post->id, $post->userid], ['confirm' => __('Are you sure you want to delete # {0}?', $comment->id)]) ?>

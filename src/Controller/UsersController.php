@@ -34,21 +34,17 @@ class UsersController extends AppController
 
     public function index()
     {
-        $users = $this->paginate($this->Users);
-        // $user = $this->Authentication->getIdentity();
-        // echo '<pre>';
-        // print_r($user);
-        // die;
-
-        $this->set(compact('users'));
+        $user = $this->Authentication->getIdentity();
+        if ($user->role == 0) {
+            $users = $this->paginate($this->Users);
+            $this->set(compact('users'));
+        } elseif ($user->role == 1) {
+            return $this->redirect(['action' => 'view']);
+        }
     }
 
-    public function userindex()
+    public function adminindex()
     {
-        $this->viewBuilder()->setLayout('mydefault');
-
-        $posts = $this->paginate($this->Post);
-        $this->set(compact('posts'));
     }
 
     public function home()
@@ -56,9 +52,9 @@ class UsersController extends AppController
         $this->paginate = [
             'contain' => ['Users'],
         ];
-        $post = $this->paginate($this->Post);
+        $posts = $this->paginate($this->Post);
 
-        $this->set(compact('post'));
+        $this->set(compact('posts'));
     }
 
     /**
@@ -70,9 +66,16 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => ['Post'],
-        ]);
+        $user = $this->Authentication->getIdentity();
+        if ($user->role == 0) {
+            $user = $this->Users->get($id, [
+                'contain' => ['Post'],
+            ]);
+        } elseif ($user->role == 1) {
+            $user = $this->Users->get($user->id, [
+                'contain' => ['Post'],
+            ]);
+        }
 
         $this->set(compact('user'));
     }
@@ -82,6 +85,11 @@ class UsersController extends AppController
         $post = $this->Post->get($id, [
             'contain' => ['Users', 'Comment'],
         ]);
+        $user = $this->Authentication->getIdentity();
+        if ($user) {
+            $role = $user->role;
+            $post['role'] = $role;
+        }
         $post['userid'] = $userid;
 
         $comment = $this->Comment->newEmptyEntity();
@@ -107,8 +115,12 @@ class UsersController extends AppController
     public function add()
     {
         $user = $this->Users->newEmptyEntity();
+        // if ($this->request->is('ajax')) {
         if ($this->request->is('post')) {
             $data = $this->request->getData();
+            // echo '<pre>';
+            // print_r($data);
+            // die;
             $productImage = $this->request->getData("image");
             $fileName = $productImage->getClientFilename();
             $fileSize = $productImage->getSize();
@@ -130,9 +142,9 @@ class UsersController extends AppController
                 }
                 $this->Flash->success(__('The user has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'login']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            // $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $this->set(compact('user'));
     }
@@ -185,9 +197,17 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => [],
-        ]);
+        $user = $this->Authentication->getIdentity();
+        if ($user->role == 0) {
+            $user = $this->Users->get($id, [
+                'contain' => [],
+            ]);
+        } elseif ($user->role == 1) {
+            $user = $this->Users->get($user->id, [
+                'contain' => [],
+            ]);
+        }
+
         $fileName2 = $user['image'];
 
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -226,9 +246,22 @@ class UsersController extends AppController
 
     public function postedit($id = null, $userid = null)
     {
-        $post = $this->Post->get($id, [
-            'contain' => [],
-        ]);
+        $user = $this->Authentication->getIdentity();
+        if ($user->role == 0) {
+            $post = $this->Post->get($id, [
+                'contain' => [],
+            ]);
+        } elseif ($user->role == 1) {
+            if ($user->id == $userid) {
+                $post = $this->Post->get($id, [
+                    'contain' => [],
+                ]);
+            } else {
+                return $this->redirect(['controller' => 'users', 'action' => 'view', $user->id]);
+            }
+        }
+
+
         $post['userid'] = $userid;
         $fileName2 = $post['post_image'];
 
@@ -345,12 +378,19 @@ class UsersController extends AppController
         // regardless of POST or GET, redirect if user is logged in
         if ($result && $result->isValid()) {
             // redirect to /articles after login success
-            $redirect = $this->request->getQuery('redirect', [
-                'controller' => 'Users',
-                'action' => 'index',
-            ]);
-            // $session = $this->request->getSession(); //read session data
-            // $session->write('login', true);
+            $user = $this->Authentication->getIdentity();
+            if ($user->role == 1) {
+                $redirect = $this->request->getQuery('redirect', [
+                    'controller' => 'Users',
+                    'action' => 'view',
+                ]);
+            } elseif ($user->role == 0) {
+                $redirect = $this->request->getQuery('redirect', [
+                    'controller' => 'Users',
+                    'action' => 'index',
+                ]);
+            }
+
 
             return $this->redirect($redirect);
         }
@@ -383,7 +423,7 @@ class UsersController extends AppController
                 if ($users->save($user)) {
                     $mailer = new Mailer('default');
                     $mailer->setTransport('gmail');
-                    $mailer->setFrom(['abc@gmail.com' => 'Rahul']);
+                    $mailer->setFrom(['rkteqm@gmail.com' => 'Rahul']);
                     $mailer->setTo($email);
                     $mailer->setEmailFormat('html');
                     $mailer->setSubject('Reset password link');
@@ -428,6 +468,6 @@ class UsersController extends AppController
     }
 
     public $paginate = [
-        'limit' => 9
+        'limit' => 12
     ];
 }
