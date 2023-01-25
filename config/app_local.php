@@ -85,7 +85,7 @@ return [
             'host' => 'smtp.gmail.com',
             'port' => 587,
             'username' => 'rkteqm@gmail.com',
-            'password' => 'xxxxxxxxxxxx',
+            'password' => 'wdrjaftgrbrwouua',
             'className' => 'Smtp',
             'tls' => true,
             'client' => null,
