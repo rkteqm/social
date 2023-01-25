@@ -17046,3 +17046,118 @@ Referer URL: http://localhost:8765/users/forgot
 Client IP: 127.0.0.1
 2023-01-25 04:15:50 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
 2023-01-25 04:15:50 warning: The datasource configuration "debug_kit" was not found.
+2023-01-25 07:47:46 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2023-01-25 07:47:46 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2023-01-25 07:47:46 warning: The datasource configuration "debug_kit" was not found.
+2023-01-25 07:47:47 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2023-01-25 07:47:47 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2023-01-25 07:47:47 warning: The datasource configuration "debug_kit" was not found.
+2023-01-25 07:47:58 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2023-01-25 07:47:58 error: [Cake\Http\Exception\InvalidCsrfTokenException] Missing or invalid CSRF cookie. in /var/www/html/social/vendor/cakephp/cakephp/src/Http/Middleware/CsrfProtectionMiddleware.php on line 394
+Stack Trace:
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Middleware/CsrfProtectionMiddleware.php:170
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Middleware/BodyParserMiddleware.php:162
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Routing/Middleware/RoutingMiddleware.php:186
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Routing/Middleware/AssetMiddleware.php:68
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Error/Middleware/ErrorHandlerMiddleware.php:131
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/debug_kit/src/Middleware/DebugKitMiddleware.php:60
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:58
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Server.php:90
+- /var/www/html/social/webroot/index.php:40
+
+Request URL: /add
+Referer URL: http://localhost:8765/add
+Client IP: 127.0.0.1
+2023-01-25 07:47:58 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2023-01-25 07:47:58 warning: The datasource configuration "debug_kit" was not found.
+2023-01-25 07:48:00 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2023-01-25 07:48:00 error: [Cake\Http\Exception\InvalidCsrfTokenException] Missing or incorrect CSRF cookie type. in /var/www/html/social/vendor/cakephp/cakephp/src/Http/Middleware/CsrfProtectionMiddleware.php on line 390
+Stack Trace:
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Middleware/CsrfProtectionMiddleware.php:170
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Middleware/BodyParserMiddleware.php:162
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Routing/Middleware/RoutingMiddleware.php:186
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Routing/Middleware/AssetMiddleware.php:68
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Error/Middleware/ErrorHandlerMiddleware.php:131
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/debug_kit/src/Middleware/DebugKitMiddleware.php:60
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:58
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Server.php:90
+- /var/www/html/social/webroot/index.php:40
+
+Request URL: /add
+Referer URL: http://localhost:8765/add
+Client IP: 127.0.0.1
+2023-01-25 07:48:00 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2023-01-25 07:48:00 warning: The datasource configuration "debug_kit" was not found.
+2023-01-25 07:48:00 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2023-01-25 07:48:00 error: [Cake\Http\Exception\InvalidCsrfTokenException] Missing or incorrect CSRF cookie type. in /var/www/html/social/vendor/cakephp/cakephp/src/Http/Middleware/CsrfProtectionMiddleware.php on line 390
+Stack Trace:
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Middleware/CsrfProtectionMiddleware.php:170
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Middleware/BodyParserMiddleware.php:162
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Routing/Middleware/RoutingMiddleware.php:186
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Routing/Middleware/AssetMiddleware.php:68
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Error/Middleware/ErrorHandlerMiddleware.php:131
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/debug_kit/src/Middleware/DebugKitMiddleware.php:60
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:58
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Server.php:90
+- /var/www/html/social/webroot/index.php:40
+
+Request URL: /add
+Referer URL: http://localhost:8765/add
+Client IP: 127.0.0.1
+2023-01-25 07:48:00 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2023-01-25 07:48:00 warning: The datasource configuration "debug_kit" was not found.
+2023-01-25 07:48:32 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2023-01-25 07:48:32 error: [Cake\Http\Exception\InvalidCsrfTokenException] Missing or incorrect CSRF cookie type. in /var/www/html/social/vendor/cakephp/cakephp/src/Http/Middleware/CsrfProtectionMiddleware.php on line 390
+Stack Trace:
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Middleware/CsrfProtectionMiddleware.php:170
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Middleware/BodyParserMiddleware.php:162
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Routing/Middleware/RoutingMiddleware.php:186
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Routing/Middleware/AssetMiddleware.php:68
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Error/Middleware/ErrorHandlerMiddleware.php:131
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/debug_kit/src/Middleware/DebugKitMiddleware.php:60
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:73
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Runner.php:58
+- /var/www/html/social/vendor/cakephp/cakephp/src/Http/Server.php:90
+- /var/www/html/social/webroot/index.php:40
+
+Request URL: /add
+Referer URL: http://localhost:8765/add
+Client IP: 127.0.0.1
+2023-01-25 07:48:32 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2023-01-25 07:48:32 warning: The datasource configuration "debug_kit" was not found.
+2023-01-25 07:48:33 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2023-01-25 07:48:33 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2023-01-25 07:48:33 warning: The datasource configuration "debug_kit" was not found.
+2023-01-25 07:48:34 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2023-01-25 07:48:34 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2023-01-25 07:48:34 warning: The datasource configuration "debug_kit" was not found.
+2023-01-25 07:48:44 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2023-01-25 07:52:11 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2023-01-25 07:52:30 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2023-01-25 07:52:30 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2023-01-25 07:52:30 warning: The datasource configuration "debug_kit" was not found.
+2023-01-25 07:53:48 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2023-01-25 07:53:58 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
